@@ -217,21 +217,22 @@ mode "resize" {
 # set $urgent-bg-color     #E53935
 
 set $bg-color 	         #383838
-set $inactive-bg-color   #404040
+set $inactive-bg-color   #424242
 set $text-color          #C3C3C3
 set $inactive-text-color #676E7D
-set $urgent-bg-color     #E53935
+set $urgent-bg-color     #a2e535
 
-#babdb6mint 
+for_window [class="^.*"] border pixel 5
 
 # window colors
 #                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          #00ff00
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color  #00ff00
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color  #00ff00
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
+client.focused          $bg-color           $bg-color          $text-color          $bg-color 
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color  $bg-color 
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color  $bg-color 
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $bg-color 
 
-hide_edge_borders both
+
+#hide_edge_borders both
 
 bindsym $mod+r mode "resize"
 
@@ -291,3 +292,15 @@ for_window [class="awakened-poe-trade"] floating enable
 bindsym $mod+Shift+p exec maim -s -o $HOME/Imagens/$(date +%s).png
 # Screnn shot of the current active window (determined by mouse position)
 bindsym $mod+p exec maim -i $(xdotool getactivewindow) $HOME/Imagens/$(date +%s).png
+
+
+# Configure 5px of space between windows and to the screen edges.
+gaps inner 5px
+
+# Configure an additional 5px of extra space to the screen edges,
+# for a total gap of 10px to the screen edges, and 5px between windows.
+gaps outer 5px
+
+# Only enable outer gaps when there is exactly one window or split container on the workspace.
+smart_gaps inverse_outer
+
