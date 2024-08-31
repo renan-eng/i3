@@ -31,7 +31,11 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock i3lock --nofork
+# exec --no-startup-id xss-lock --transfer-sleep-lock i3lock --nofork
+
+# xidlehook
+#exec_always --no-startup-id xidlehook --detect-sleep --not-when-audio --not-when-fullscreen --timer 300 'xset dpms force standby' --timer 300 'i3lock' --timer 300 'systemctl suspend'
+
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -125,12 +129,12 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: main  "
-set $ws2 "2: terminal  "
-set $ws3 "3: games  "
+set $ws1 "1: main 󰍹 "
+set $ws2 "2: terminal   "
+set $ws3 "3: games 󰺷 "
 set $ws4 "4: "
 set $ws5 "5: firefox  "
-set $ws6 "6: mail  "
+set $ws6 "6: mail  "
 set $ws7 "7: music  "
 set $ws8 "8: "
 set $ws9 "9: "
@@ -222,16 +226,14 @@ set $text-color          #C3C3C3
 set $inactive-text-color #676E7D
 set $urgent-bg-color     #a2e535
 
-default_border pixel 2
-
-#for_window [class="^.*"] border pixel 5
+for_window [class="^.*"] border pixel 5
 
 # window colors
 #                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          $bg-color 
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color  $bg-color 
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color  $bg-color 
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $bg-color 
+client.focused          $bg-color           $urgent-bg-color   $text-color          $urgent-bg-color 
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color  $urgent-bg-color
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color  $urgent-bg-color
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
 
 
 hide_edge_borders smart
@@ -244,7 +246,7 @@ bar {
        status_command i3blocks -c ~/.config/i3/i3blocks.conf
        colors {
 		background $bg-color
-	    	separator #757575
+	    	separator #d66b00
 		#                  border             background         text
 		focused_workspace  $bg-color          $bg-color          $text-color
 		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
@@ -294,15 +296,4 @@ for_window [class="awakened-poe-trade"] floating enable
 bindsym $mod+Shift+p exec maim -s -o $HOME/Imagens/$(date +%s).png
 # Screnn shot of the current active window (determined by mouse position)
 bindsym $mod+p exec maim -i $(xdotool getactivewindow) $HOME/Imagens/$(date +%s).png
-
-
-# Configure 5px of space between windows and to the screen edges.
-gaps inner 5px
-
-# Configure an additional 5px of extra space to the screen edges,
-# for a total gap of 10px to the screen edges, and 5px between windows.
-gaps outer 5px
-
-# Only enable outer gaps when there is exactly one window or split container on the workspace.
-smart_gaps inverse_outer
 
